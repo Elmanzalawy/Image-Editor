@@ -20,12 +20,13 @@
     <link rel="stylesheet" href="{{asset('css/util.css')}}">
 </head>
 <body>
-    <div id="app">
+    <div id="app" class=" fade-in">
         {{-- @include('includes.navbar') --}}
+        @include('includes.editor_bar')
         @include('includes.messages')
 
         <main class="py-4">
-            <div class="container-fluid fade-in">
+            <div class="container">
                 @yield('content')
             </div>
         </main>
@@ -39,8 +40,14 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-    <script src="{{asset("js/custom.js")}}"></script>
+    <script src="{{asset("js/util.js")}}"></script>
+    <script src="{{asset("js/canvas.js")}}"></script>
+    <script src="{{asset("js/filters.js")}}"></script>
 
+    <script>
+        // initialize tooltips
+        $('[data-toggle="tooltip"]').tooltip()
+    </script>
     @yield('javascript')
 
 </body>

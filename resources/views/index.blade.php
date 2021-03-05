@@ -38,18 +38,25 @@
 
 @section('content')
 
+    <div id="title-header" class="row mb-3 default-ui">
+        <div class="col-12 text-center">
+            <h3>Image Editor</h3>
+        </div>
+    </div>
     <div class="row">
         {{-- <img id="tempImage" src="{{asset('images/thinkingPepe.png')}}" height="50px" alt=""> --}}
-        <div class="col-lg-10">
+        <div class="col-lg-1 default-ui" id="left-padding-col"></div>
+        <div class="col-lg-10 mb-2" id="image-col">
             <div class="card bg-deep-dark">
                 <div class="card-body" id='image-card'>
+                    <canvas id='canvas' class='fade-in editor-ui' style='width:100%;'></canvas>
                     {{-- FORM --}}
-                    <form class="box bg-dark" method="post" action="{{route('image.upload')}}"
+                    <form class="box bg-dark default-ui" method="post" action="{{route('image.upload')}}"
                         enctype="multipart/form-data">
                         @csrf
 
                         <input id="file" type="file" name="file" hidden>
-                        <div class="box-text text-center">
+                        <div class="box-text text-center blink">
                             <span>
                                 <h1 class="fas fa-upload"></h1>
                             </span>
@@ -59,75 +66,30 @@
 
                         {{-- <button class="btn btn-primary mt-2" type="submit">Upload</button> --}}
                     </form>
+                    <a class="editor-ui" id="download-link" hidden></a>
+
                 </div>
             </div>
         </div>
-        <div class="col-lg-2">
-            <div class="card bg-deep-dark">
-                <div class="card-header text-center">
-                    <h5>Edit Options</h5>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="formControlRange">Filter #1</label>
-                        <input type="range" class="form-control-range" id="formControlRange">
-                    </div>
-                    <div class="form-group">
-                        <label for="formControlRange">Filter #2</label>
-                        <input type="range" class="form-control-range" id="formControlRange">
-                    </div>
-                    <div class="form-group">
-                        <label for="formControlRange">Filter #3</label>
-                        <input type="range" class="form-control-range" id="formControlRange">
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('includes.filters')
     </div>
 @endsection
 
 @section('javascript')
 <script>
+    //     // CANVAS FILTER DOCS: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter
+
     //draw image on canvas
-    async function renderImage(image) {
-        $('body').append(`<img id='tempImage' src='${image}' width='auto%' style='overflow:scroll; display:block;'>`);
-    }
-    function drawCanvas(){
-        // CANVAS FILTER DOCS: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter
-
-        $("#image-card").empty().prepend("<canvas id='canvas' class='fade-in' style='width:100%;'></canvas>");
-
-        var canvas = document.getElementById("canvas");
-        var ctx = canvas.getContext("2d");
-        //create a temporary image tag to draw it on canvas
-        let img = document.getElementById("tempImage");
-        //set canvas initial dimensions equal to image dimensions (we use this to prevent quality loss and stretching)
-        let width = img.width;
-        let height = img.height;
-        canvas.width = width;
-        canvas.height = height;
-        let canvasWidth = canvas.width;
-        let canvasHeight = canvas.height;
-        // $(canvas).css({
-        //     "width":`${width}`,
-        //     "height":`${height}`
-        // })
-        console.log({width, height})
-        console.log({canvasWidth, canvasHeight})
-        // var img = new Image;
-        // img.src = URL.createObjectURL(image);
-        ctx.drawImage(img, 0, 0, img.width,    img.height,     // source rectangle
-        0, 0, canvas.width, canvas.height);
-
-        ctx.filter = "blur(4px)"
-
-        //delete img tag after canvas is drawn
-        $(img).remove();
+    async function renderImage(image, name) {
+        console.log({name})
+        fileName = name;
+        $('body').append(`<img id='tempImage' src='${image}' data-name='${name}'  hidden>`);
     }
 
     // Box dragover event
     var droppedFiles = false;
     const form = $(".box");
+    let fileName = "";
 
     form.on('drag dragstart dragend dragover dragenter dragleave drop', function (e) {
             e.preventDefault();
@@ -138,6 +100,32 @@
         })
         .on('dragleave dragend drop', function () {
             form.removeClass('is-dragover');
+        })
+        .on('input', function(e){
+            droppedFiles = e.target.files;
+            console.log(droppedFiles)
+
+            if (droppedFiles.length > 1) {
+                bootstrapAlert('danger',"<strong>Error</strong>: Only one image may be uploaded.");
+            } else {
+                // $(form).trigger('submit');
+                jQuery.each(droppedFiles, function (index, file) {
+                    // alert(file.type)
+                    var fileReader = new FileReader();
+                    fileReader.readAsDataURL(file);
+
+                    fileReader.onload = (function (file) {
+                        console.log({file})
+                        return function (e) {
+                            renderImage(fileReader.result, file.name).then(function(){
+                                editorMode()
+                                renderCanvas()
+                            })
+                        };
+                    })(file);
+                });
+
+            }
         })
         .on('drop', function (e) {
             droppedFiles = e.originalEvent.dataTransfer.files;
@@ -153,9 +141,11 @@
                     fileReader.readAsDataURL(file);
 
                     fileReader.onload = (function (file) {
+                        console.log({file})
                         return function (e) {
-                            renderImage(fileReader.result).then(function(){
-                                drawCanvas()
+                            renderImage(fileReader.result, file.name).then(function(){
+                                editorMode()
+                                renderCanvas()
                             })
                         };
                     })(file);
