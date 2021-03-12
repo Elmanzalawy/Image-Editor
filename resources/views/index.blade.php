@@ -119,7 +119,10 @@
                         return function (e) {
                             renderImage(fileReader.result, file.name).then(function(){
                                 editorMode()
-                                renderCanvas()
+
+                                //create canvas object
+                                let canvas = new Canvas(document.getElementById("canvas"));
+                                canvas.render()
                             })
                         };
                     })(file);
@@ -145,7 +148,10 @@
                         return function (e) {
                             renderImage(fileReader.result, file.name).then(function(){
                                 editorMode()
-                                renderCanvas()
+
+                                //create canvas object
+                                let canvas = new Canvas(document.getElementById("canvas"));
+                                canvas.render()
                             })
                         };
                     })(file);

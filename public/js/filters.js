@@ -29,7 +29,8 @@ function resetFilters(){
 
         filters[property] = DefaultFilters[property];
     }
-    renderCanvas()
+    let canvas = new Canvas();
+    canvas.render(true)
 
 }
 
@@ -56,6 +57,9 @@ $(".filter-input").each(function(){
         applyFilters(filters);
 
         //filter:'none'; =>resets filters
+    })
+    .on('change', function(){
+        console.log('test');
     });
 })
 
