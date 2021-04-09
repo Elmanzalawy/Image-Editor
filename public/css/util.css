@@ -34,3 +34,7 @@
     left: 0;
     top:0;
 }
+.action-icon-selected{
+    background:var(--bg-dark);
+    color:var(--primary);
+}

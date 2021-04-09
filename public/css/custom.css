@@ -1,6 +1,7 @@
 *{
     /* defining global variables */
     --light:#ffffff;
+    --primary: #00bfff;
     --secondary: #b3b3b3;
     --dark:#3a3a3a;
     --deep-dark:#23272a;
@@ -58,4 +59,5 @@ body{
     text-decoration: none;
     color:var(--light);
 }
+
 

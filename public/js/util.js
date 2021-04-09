@@ -7,7 +7,7 @@ function bootstrapAlert(type = "success", message, triggerElement = "main"){
 }
 
 //change UI while editing
-function editorMode(){
+function editorMode(canvas){
     $("main").children(".container")
     .removeClass('container')
     .addClass('container-fluid')
@@ -17,6 +17,11 @@ function editorMode(){
 
     $(".default-ui").hide();
     $(".editor-ui").show();
+
+    //adjust margins according to image dimensions
+    // $("#image-col").css({
+    //     "margin-bottom":$("#canvas").height(),
+    // })
 }
 
 function cancelEditing(){

@@ -10,7 +10,7 @@ let filters = {
     sepia: $("#sepia-input").val()
 };
 
-const DefaultFilters = {
+const DefaultFilters = Object.freeze({
     blur: 0,
     brightness: 100,
     contrast: 100,
@@ -19,7 +19,7 @@ const DefaultFilters = {
     invert: 0,
     saturate: 100,
     sepia: 0,
-};
+});
 
 function resetFilters(){
     applyFilters(DefaultFilters);

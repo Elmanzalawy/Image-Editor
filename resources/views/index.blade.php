@@ -34,6 +34,13 @@
         transition: background-color 0.3s ease-in;
     }
 
+    #image-card{
+        /* position:relative; */
+    }
+    #canvas{
+        width:100%;
+        position: relative;
+    }
 </style>
 
 @section('content')
@@ -49,7 +56,7 @@
         <div class="col-lg-10 mb-2" id="image-col">
             <div class="card bg-deep-dark">
                 <div class="card-body" id='image-card'>
-                    <canvas id='canvas' class='fade-in editor-ui' style='width:100%;'></canvas>
+                    <canvas id='canvas' class='fade-in editor-ui'></canvas>
                     {{-- FORM --}}
                     <form class="box bg-dark default-ui" method="post" action="{{route('image.upload')}}"
                         enctype="multipart/form-data">
@@ -78,6 +85,8 @@
 @section('javascript')
 <script>
     //     // CANVAS FILTER DOCS: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter
+
+    let canvas;
 
     //draw image on canvas
     async function renderImage(image, name) {
@@ -118,11 +127,11 @@
                         console.log({file})
                         return function (e) {
                             renderImage(fileReader.result, file.name).then(function(){
-                                editorMode()
 
                                 //create canvas object
-                                let canvas = new Canvas(document.getElementById("canvas"));
+                                canvas = new Canvas(document.getElementById("canvas"));
                                 canvas.render()
+                                editorMode(canvas)
                             })
                         };
                     })(file);
@@ -147,11 +156,11 @@
                         console.log({file})
                         return function (e) {
                             renderImage(fileReader.result, file.name).then(function(){
-                                editorMode()
 
                                 //create canvas object
-                                let canvas = new Canvas(document.getElementById("canvas"));
+                                canvas = new Canvas(document.getElementById("canvas"));
                                 canvas.render()
+                                editorMode()
                             })
                         };
                     })(file);
