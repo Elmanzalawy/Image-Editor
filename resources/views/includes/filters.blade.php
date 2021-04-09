@@ -1,5 +1,5 @@
 <div class="col-lg-2 fade-in editor-ui" id="options-col">
-    <div class="card bg-deep-dark my-2">
+    <div class="card bg-deep-dark">
         <div class="card-header text-center">
             <h5>Edit Options</h5>
         </div>
@@ -46,14 +46,6 @@
                         <button class="form-control btn btn-outline-danger btn-sm" onclick="resetFilters()"><i class="fas fa-undo"></i> Reset Filters</button>
                     </div>
                 </div>
-        </div>
-    </div>
-
-    <div class="card bg-deep-dark my-2">
-        <div class="card-header text-center">
-            <h5>Layers</h5>
-        </div>
-        <div class="card-body" id="layers-container">
         </div>
     </div>
 </div>

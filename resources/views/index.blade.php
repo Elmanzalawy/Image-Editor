@@ -131,7 +131,7 @@
                                 //create canvas object
                                 canvas = new Canvas(document.getElementById("canvas"));
                                 canvas.render()
-                                editorMode()
+                                editorMode(canvas)
                             })
                         };
                     })(file);
