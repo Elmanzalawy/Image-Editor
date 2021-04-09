@@ -1,4 +1,3 @@
-let SELECT_MODE = false;
 // Digital Image Processing reference: https://www.tutorialspoint.com/dip/optical_character_recognition.htm
 class Canvas{
 
@@ -129,7 +128,6 @@ class Canvas{
     }
 }
 
-let startCoords = {x:0,y:0};
 // let canvas;
 function canvasSelect(e){
     console.log({startCoords})
@@ -137,43 +135,43 @@ function canvasSelect(e){
     canvas.draw(startCoords, e)
 }
 
-function canvasToggleSelectMode(el){
-    //if already in select mode, toggle it off
-    // if($(el).children().eq(0).hasClass("action-icon-selected")){
-    if(SELECT_MODE == true){
-        SELECT_MODE = false;
-        console.log("select mode off")
-        $("canvas").off('mousedown mousemove mouseup');
-        $(el).children().eq(0).removeClass("action-icon-selected")
-    }
-    //init select mode
-    else{
-        SELECT_MODE = true;
-        console.log("select mode on")
+// function canvasToggleSelectMode(el){
+//     //if already in select mode, toggle it off
+//     // if($(el).children().eq(0).hasClass("action-icon-selected")){
+//     if(SELECT_MODE == true){
+//         SELECT_MODE = false;
+//         console.log("select mode off")
+//         $("canvas").off('mousedown mousemove mouseup');
+//         $(el).children().eq(0).removeClass("action-icon-selected")
+//     }
+//     //init select mode
+//     else{
+//         SELECT_MODE = true;
+//         console.log("select mode on")
 
-        // canvas = new Canvas();
-        $(el).children().eq(0).addClass("action-icon-selected");
-        $("canvas").on('mousedown',function(e){
-            console.log("mousedown")
-            e.preventDefault();
-            e.stopPropagation();
+//         // canvas = new Canvas();
+//         $(el).children().eq(0).addClass("action-icon-selected");
+//         $("canvas").on('mousedown',function(e){
+//             console.log("mousedown")
+//             e.preventDefault();
+//             e.stopPropagation();
 
 
 
-            var layer = canvas.rasterizeLayer()
-            startCoords.x = e.clientX;
-            startCoords.y = e.clientY;
+//             var layer = canvas.rasterizeLayer()
+//             startCoords.x = e.clientX;
+//             startCoords.y = e.clientY;
 
-            $(layer).on('mousemove', canvasSelect);
-            $(layer).on('mouseup', function(e){
-                SELECT_MODE = false;
-                console.log("mouseup")
-                // canvas.rasterizeLayer(e)
-                $(layer).off('mousemove mouseup');
-            });
+//             $(layer).on('mousemove', canvasSelect);
+//             $(layer).on('mouseup', function(e){
+//                 SELECT_MODE = false;
+//                 console.log("mouseup")
+//                 // canvas.rasterizeLayer(e)
+//                 $(layer).off('mousemove mouseup');
+//             });
 
-        })
-    }
+//         })
+//     }
 
-}
+// }
 

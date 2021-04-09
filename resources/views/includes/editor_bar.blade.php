@@ -7,7 +7,7 @@
             <a href="#" >
                 <i class="fas fa-undo ml-4" data-toggle="tooltip" data-placement="bottom" title="Undo"></i>
             </a>
-            <a href="#" onclick="canvasToggleSelectMode(this)">
+            <a href="#" onclick="toggleSelectMode(this)">
                 <i class="far fa-object-ungroup ml-4" data-toggle="tooltip" data-placement="bottom" title="Select Tool"></i>
             </a>
 
