@@ -44,10 +44,10 @@ function addLayer(canvas){
     canvas.layers.push(layer);
 
     $("#layers-container").append(`<div class='layer-card position-relative p-2 border border-secondary mb-2 rounded' id='layer-card-${layer.id}' onclick='selectLayer(this, ${layer.id})'>Layer #${layer.id}
-    <span class='position-absolute delete-layer-button' style='right:1rem; transform:translateY(0.25rem); cursor:pointer;' onclick='removeLayer(this, ${layer.id})'><i class="fas fa-times text-danger" data-toggle="tooltip" data-placement="bottom" title="Delete Layer"></i></span>
+    <span class='position-absolute delete-layer-button' style='right:1rem; transform:translateY(0.25rem); cursor:pointer;' onclick='removeLayer(this, ${layer.id})'><i class="fas fa-times text-danger" data-toggle="tooltip" data-placement="left" title="Delete Layer"></i></span>
     </div>`);
 
-    $(".delete-layer-button i").tooltip();
+    // $(".delete-layer-button i").tooltip();
 }
 
 function selectLayer(layerCard, layerID){
